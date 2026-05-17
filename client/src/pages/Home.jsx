@@ -75,6 +75,188 @@ export default function Home() {
           }}
         />
 
+        {/* ── FASHION FLOATERS ── */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none select-none" aria-hidden="true">
+
+          {/* Ambient orb — gold, drifts top-left */}
+          <motion.div
+            className="absolute rounded-full"
+            style={{ top: '-160px', left: '-160px', width: '520px', height: '520px', background: 'radial-gradient(circle, rgba(201,168,76,0.10) 0%, transparent 65%)' }}
+            animate={{ x: [0, 60, 0], y: [0, 40, 0] }}
+            transition={{ duration: 22, repeat: Infinity, ease: 'easeInOut' }}
+          />
+          {/* Ambient orb — indigo, drifts bottom-right */}
+          <motion.div
+            className="absolute rounded-full"
+            style={{ bottom: '-200px', right: '-80px', width: '600px', height: '600px', background: 'radial-gradient(circle, rgba(80,90,200,0.07) 0%, transparent 65%)' }}
+            animate={{ x: [0, -50, 0], y: [0, -55, 0] }}
+            transition={{ duration: 28, repeat: Infinity, ease: 'easeInOut' }}
+          />
+
+          {/* ── LEFT COLUMN ── */}
+
+          {/* Crown */}
+          <motion.div className="absolute hidden md:block text-gold" style={{ top: '10%', left: '5%' }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.32, y: [0, -18, 0], rotate: [-4, 4, -4] }}
+            transition={{ opacity: { delay: 0.5, duration: 1.5 }, y: { delay: 0.5, duration: 6.5, repeat: Infinity, ease: 'easeInOut' }, rotate: { delay: 0.5, duration: 9, repeat: Infinity, ease: 'easeInOut' } }}
+          >
+            <svg width="44" height="34" viewBox="0 0 44 34" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M4 30 L4 14 L13 22 L22 4 L31 22 L40 14 L40 30 Z" />
+              <line x1="4" y1="30" x2="40" y2="30" />
+              <circle cx="22" cy="4" r="2" fill="currentColor" stroke="none" />
+              <circle cx="4" cy="13" r="2" fill="currentColor" stroke="none" />
+              <circle cx="40" cy="13" r="2" fill="currentColor" stroke="none" />
+            </svg>
+          </motion.div>
+
+          {/* Sparkle — upper left */}
+          <motion.div className="absolute hidden sm:block text-cream" style={{ top: '27%', left: '9%' }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.24, y: [0, -12, 0], scale: [1, 1.22, 1] }}
+            transition={{ opacity: { delay: 0.9, duration: 1.2 }, y: { delay: 0.9, duration: 5, repeat: Infinity, ease: 'easeInOut' }, scale: { delay: 0.9, duration: 5, repeat: Infinity, ease: 'easeInOut' } }}
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2 L13.5 10.5 L22 12 L13.5 13.5 L12 22 L10.5 13.5 L2 12 L10.5 10.5 Z" />
+            </svg>
+          </motion.div>
+
+          {/* Dress */}
+          <motion.div className="absolute hidden md:block text-gold" style={{ top: '40%', left: '3.5%' }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.28, y: [0, -20, 0], rotate: [-5, 5, -5] }}
+            transition={{ opacity: { delay: 0.7, duration: 1.5 }, y: { delay: 0.7, duration: 7.5, repeat: Infinity, ease: 'easeInOut' }, rotate: { delay: 0.7, duration: 9.5, repeat: Infinity, ease: 'easeInOut' } }}
+          >
+            <svg width="36" height="52" viewBox="0 0 40 56" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M16 2 Q20 8 24 2" />
+              <path d="M16 2 L8 10 L2 10 L2 20 L10 17 L7 54 L33 54 L30 17 L38 20 L38 10 L32 10 L24 2" />
+            </svg>
+          </motion.div>
+
+          {/* Lightning bolt */}
+          <motion.div className="absolute hidden md:block text-cream" style={{ top: '64%', left: '7%' }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.20, y: [0, -15, 0], rotate: [-3, 3, -3] }}
+            transition={{ opacity: { delay: 1.4, duration: 1.5 }, y: { delay: 1.4, duration: 6, repeat: Infinity, ease: 'easeInOut' }, rotate: { delay: 1.4, duration: 8, repeat: Infinity, ease: 'easeInOut' } }}
+          >
+            <svg width="26" height="42" viewBox="0 0 28 46" fill="currentColor">
+              <path d="M18 2 L6 24 L14 24 L10 44 L22 20 L14 20 Z" />
+            </svg>
+          </motion.div>
+
+          {/* Tiny sparkle — bottom left */}
+          <motion.div className="absolute hidden sm:block text-gold" style={{ top: '82%', left: '13%' }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.40, y: [0, -10, 0], scale: [1, 1.35, 1] }}
+            transition={{ opacity: { delay: 1.8, duration: 1 }, y: { delay: 1.8, duration: 4.5, repeat: Infinity, ease: 'easeInOut' }, scale: { delay: 1.8, duration: 4.5, repeat: Infinity, ease: 'easeInOut' } }}
+          >
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2 L13.5 10.5 L22 12 L13.5 13.5 L12 22 L10.5 13.5 L2 12 L10.5 10.5 Z" />
+            </svg>
+          </motion.div>
+
+          {/* ── RIGHT COLUMN ── */}
+
+          {/* Clothes hanger */}
+          <motion.div className="absolute hidden md:block text-gold" style={{ top: '8%', right: '5%' }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.30, y: [0, -16, 0], rotate: [4, -4, 4] }}
+            transition={{ opacity: { delay: 0.4, duration: 1.5 }, y: { delay: 0.4, duration: 7, repeat: Infinity, ease: 'easeInOut' }, rotate: { delay: 0.4, duration: 10, repeat: Infinity, ease: 'easeInOut' } }}
+          >
+            <svg width="46" height="36" viewBox="0 0 52 40" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M26 3 C26 3 23 3 23 6 C23 7.8 24.5 8.5 26 8.5" />
+              <path d="M26 8.5 L6 28" />
+              <path d="M26 8.5 L46 28" />
+              <path d="M4 28 Q4 32 8 32 L44 32 Q48 32 48 28" />
+            </svg>
+          </motion.div>
+
+          {/* Sunglasses */}
+          <motion.div className="absolute hidden md:block text-gold" style={{ top: '28%', right: '4%' }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.30, y: [0, -18, 0], rotate: [3, -3, 3] }}
+            transition={{ opacity: { delay: 0.6, duration: 1.5 }, y: { delay: 0.6, duration: 7, repeat: Infinity, ease: 'easeInOut' }, rotate: { delay: 0.6, duration: 9, repeat: Infinity, ease: 'easeInOut' } }}
+          >
+            <svg width="56" height="26" viewBox="0 0 62 30" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="16" cy="15" r="12" />
+              <circle cx="46" cy="15" r="12" />
+              <path d="M28 15 L34 15" />
+              <path d="M4 10 L0 8" />
+              <path d="M58 10 L62 8" />
+            </svg>
+          </motion.div>
+
+          {/* Sparkle — right middle */}
+          <motion.div className="absolute hidden sm:block text-cream" style={{ top: '44%', right: '8%' }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.22, y: [0, -14, 0], scale: [1, 1.25, 1] }}
+            transition={{ opacity: { delay: 1.1, duration: 1.2 }, y: { delay: 1.1, duration: 5.5, repeat: Infinity, ease: 'easeInOut' }, scale: { delay: 1.1, duration: 5.5, repeat: Infinity, ease: 'easeInOut' } }}
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2 L13.5 10.5 L22 12 L13.5 13.5 L12 22 L10.5 13.5 L2 12 L10.5 10.5 Z" />
+            </svg>
+          </motion.div>
+
+          {/* Handbag */}
+          <motion.div className="absolute hidden md:block text-gold" style={{ top: '58%', right: '4%' }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.28, y: [0, -20, 0], rotate: [-5, 5, -5] }}
+            transition={{ opacity: { delay: 1.6, duration: 1.5 }, y: { delay: 1.6, duration: 8, repeat: Infinity, ease: 'easeInOut' }, rotate: { delay: 1.6, duration: 10, repeat: Infinity, ease: 'easeInOut' } }}
+          >
+            <svg width="40" height="46" viewBox="0 0 44 52" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <rect x="4" y="18" width="36" height="30" rx="5" />
+              <path d="M14 18 Q14 6 22 6 Q30 6 30 18" />
+              <line x1="4" y1="32" x2="40" y2="32" strokeOpacity="0.4" />
+              <line x1="19" y1="40" x2="25" y2="40" />
+            </svg>
+          </motion.div>
+
+          {/* Diamond gem */}
+          <motion.div className="absolute hidden md:block text-cream" style={{ top: '76%', right: '6%' }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.22, y: [0, -16, 0], rotate: [4, -4, 4] }}
+            transition={{ opacity: { delay: 2, duration: 1.5 }, y: { delay: 2, duration: 6, repeat: Infinity, ease: 'easeInOut' }, rotate: { delay: 2, duration: 8, repeat: Infinity, ease: 'easeInOut' } }}
+          >
+            <svg width="36" height="32" viewBox="0 0 40 36" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <polygon points="20,34 2,14 8,2 32,2 38,14" />
+              <path d="M2 14 L20 34 L38 14" />
+              <path d="M8 2 L14 14 L26 14 L32 2" />
+            </svg>
+          </motion.div>
+
+          {/* Tiny sparkle — bottom right */}
+          <motion.div className="absolute hidden sm:block text-gold" style={{ top: '86%', right: '14%' }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.42, y: [0, -9, 0], scale: [1, 1.3, 1] }}
+            transition={{ opacity: { delay: 2.3, duration: 1 }, y: { delay: 2.3, duration: 4, repeat: Infinity, ease: 'easeInOut' }, scale: { delay: 2.3, duration: 4, repeat: Infinity, ease: 'easeInOut' } }}
+          >
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2 L13.5 10.5 L22 12 L13.5 13.5 L12 22 L10.5 13.5 L2 12 L10.5 10.5 Z" />
+            </svg>
+          </motion.div>
+
+          {/* ── TOP CENTER EXTRAS ── */}
+          <motion.div className="absolute hidden sm:block text-gold" style={{ top: '4%', left: '28%' }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.30, y: [0, -10, 0], scale: [1, 1.18, 1] }}
+            transition={{ opacity: { delay: 0.2, duration: 1.2 }, y: { delay: 0.2, duration: 5, repeat: Infinity, ease: 'easeInOut' }, scale: { delay: 0.2, duration: 5, repeat: Infinity, ease: 'easeInOut' } }}
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2 L13.5 10.5 L22 12 L13.5 13.5 L12 22 L10.5 13.5 L2 12 L10.5 10.5 Z" />
+            </svg>
+          </motion.div>
+          <motion.div className="absolute hidden sm:block text-cream" style={{ top: '6%', right: '26%' }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.20, y: [0, -10, 0], scale: [1, 1.18, 1] }}
+            transition={{ opacity: { delay: 0.8, duration: 1.2 }, y: { delay: 0.8, duration: 4.5, repeat: Infinity, ease: 'easeInOut' }, scale: { delay: 0.8, duration: 4.5, repeat: Infinity, ease: 'easeInOut' } }}
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2 L13.5 10.5 L22 12 L13.5 13.5 L12 22 L10.5 13.5 L2 12 L10.5 10.5 Z" />
+            </svg>
+          </motion.div>
+
+        </div>
+
         <motion.p
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
