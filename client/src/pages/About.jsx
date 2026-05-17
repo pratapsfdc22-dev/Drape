@@ -18,7 +18,7 @@ export default function About() {
         <div>
           <h2 className="font-heading text-2xl mb-4">Meet ARIA</h2>
           <p className="text-charcoal/80 leading-relaxed">
-            ARIA (AI Recommendation & Image Analyst) is Get Draped's styling engine, powered by Claude's
+            ARIA (Aesthetic Realtime Intelligence Advisor) is Get Draped's styling engine, powered by Claude's
             advanced vision capabilities. She analyzes your photo to understand your body type, skin tone,
             and existing style — then curates outfit recommendations tailored specifically to you.
           </p>
