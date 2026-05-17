@@ -4,6 +4,7 @@ import Home from './pages/Home.jsx'
 import Results from './pages/Results.jsx'
 import About from './pages/About.jsx'
 import Auth from './pages/Auth.jsx'
+import NotFound from './pages/NotFound.jsx'
 import Nav from './components/Nav.jsx'
 import ConsentBanner from './components/ConsentBanner.jsx'
 
@@ -18,6 +19,7 @@ export default function App() {
           <Route path="/results" element={<Results />} />
           <Route path="/about" element={<About />} />
           <Route path="/auth" element={<Auth />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
     </DrapeProvider>
