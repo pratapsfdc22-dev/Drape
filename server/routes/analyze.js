@@ -38,9 +38,12 @@ router.post('/', analyzeRateLimiter, uploadMiddleware.single('photo'), async (re
     req.file.buffer = null
     res.json(result)
   } catch (err) {
-    console.error('Analyze error:', err.message)
+    console.error('Analyze error:', err.message, err.stack)
     if (req.file) req.file.buffer = null
-    res.status(500).json({ message: 'Something went wrong. Please try again.' })
+    res.status(500).json({
+      message: 'Something went wrong. Please try again.',
+      debug: err.message,
+    })
   }
 })
 
