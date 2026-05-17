@@ -9,7 +9,9 @@ import { globalRateLimiter } from './middleware/rateLimiter.js'
 const app = express()
 const PORT = process.env.PORT || 3001
 
-app.use(helmet())
+app.use(helmet({
+  crossOriginResourcePolicy: { policy: 'cross-origin' },
+}))
 app.options('*', cors())
 app.use(cors())
 app.use(express.json({ limit: '50mb' }))
