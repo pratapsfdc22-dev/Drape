@@ -9,21 +9,9 @@ import { globalRateLimiter } from './middleware/rateLimiter.js'
 const app = express()
 const PORT = process.env.PORT || 3001
 
-const allowedOrigins = (process.env.CLIENT_URL ?? '')
-  .split(',')
-  .map(u => u.trim())
-  .filter(Boolean)
-
-const corsOptions = {
-  origin: (origin, cb) => {
-    if (!origin || allowedOrigins.includes(origin)) return cb(null, true)
-    cb(null, false)
-  },
-}
-
 app.use(helmet())
-app.options('*', cors(corsOptions))
-app.use(cors(corsOptions))
+app.options('*', cors())
+app.use(cors())
 app.use(express.json({ limit: '50mb' }))
 app.use(globalRateLimiter)
 
