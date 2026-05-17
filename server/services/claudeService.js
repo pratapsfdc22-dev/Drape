@@ -41,14 +41,27 @@ JSON structure:
   "overallAdvice": "2-3 sentences of occasion-specific style advice"
 }
 
-Use REAL brands from this list with REAL category page URLs:
-Zara (zara.com), H&M (hm.com), ASOS (asos.com), Nordstrom (nordstrom.com),
-Net-a-Porter (net-a-porter.com), Revolve (revolve.com),
-Anthropologie (anthropologie.com), Free People (freepeople.com),
-Mango (mango.com), & Other Stories (stories.com),
-Reformation (thereformation.com), Everlane (everlane.com),
-Banana Republic (bananarepublic.gap.com), J.Crew (jcrew.com),
-Lululemon (lululemon.com), Uniqlo (uniqlo.com), COS (cosstores.com)
+Use REAL brands from this list. For the "url" field, use the brand's search URL with the item name as the search term (replace spaces with +). Use ONLY these exact URL formats:
+
+Zara: https://www.zara.com/us/en/search?searchTerm=ITEM
+H&M: https://www2.hm.com/en_us/search-results.html?q=ITEM
+ASOS: https://www.asos.com/search/?q=ITEM
+Nordstrom: https://www.nordstrom.com/sr?keyword=ITEM
+Net-a-Porter: https://www.net-a-porter.com/en-us/search?q=ITEM
+Revolve: https://www.revolve.com/search/?q=ITEM
+Anthropologie: https://www.anthropologie.com/search?q=ITEM
+Free People: https://www.freepeople.com/search/?q=ITEM
+Mango: https://shop.mango.com/us/search?q=ITEM
+& Other Stories: https://www.stories.com/en_usd/search?q=ITEM
+Reformation: https://www.thereformation.com/search?q=ITEM
+Everlane: https://www.everlane.com/search?query=ITEM
+Banana Republic: https://bananarepublic.gap.com/search?searchPhrase=ITEM
+J.Crew: https://www.jcrew.com/r/search?q=ITEM
+Lululemon: https://shop.lululemon.com/search?Ntt=ITEM
+Uniqlo: https://www.uniqlo.com/us/en/search?q=ITEM
+COS: https://www.cosstores.com/en_usd/search.html?q=ITEM
+
+Example: for a "Wide-leg trousers" piece from Zara, url = "https://www.zara.com/us/en/search?searchTerm=Wide-leg+trousers"
 
 Each outfit must have 4–5 pieces (top, bottom or dress, shoes, bag, accessory).
 
