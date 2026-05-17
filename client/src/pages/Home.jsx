@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import UploadZone from '../components/UploadZone.jsx'
+import GenderPicker from '../components/GenderPicker.jsx'
 import OccasionPicker from '../components/OccasionPicker.jsx'
 import LoadingARIA from '../components/LoadingARIA.jsx'
 import { useDrape } from '../context/DrapeContext.jsx'
@@ -37,12 +38,12 @@ const HOW_IT_WORKS = [
 ]
 
 export default function Home() {
-  const { uploadedFile, selectedOccasion, setError } = useDrape()
+  const { uploadedFile, gender, selectedOccasion, setError } = useDrape()
   const { submitForAnalysis, isLoading, error } = useAnalyze()
   const [consent, setConsent] = useState(false)
   const formRef = useRef(null)
 
-  const canSubmit = !!uploadedFile && !!selectedOccasion && consent && !isLoading
+  const canSubmit = !!uploadedFile && !!gender && !!selectedOccasion && consent && !isLoading
   const isTimeoutError = error === TIMEOUT_ERROR_MSG
 
   function scrollToForm() {
@@ -51,6 +52,7 @@ export default function Home() {
 
   function handleSubmit() {
     if (!uploadedFile) { setError('Please upload a photo first.'); return }
+    if (!gender) { setError('Please select a style preference.'); return }
     if (!selectedOccasion) { setError('Please select an occasion.'); return }
     if (!consent) { setError('Please check the consent box.'); return }
     submitForAnalysis()
@@ -95,7 +97,7 @@ export default function Home() {
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.65, delay: 0.25 }}
-          className="mt-6 font-body text-cream/55 text-lg max-w-sm leading-relaxed"
+          className="mt-6 font-body text-cream/80 text-lg max-w-sm leading-relaxed"
         >
           Upload your photo. Tell ARIA your occasion.
           <br />Get a wardrobe built for you.
@@ -121,7 +123,7 @@ export default function Home() {
           className="absolute bottom-10 flex flex-col items-center gap-2 cursor-pointer"
           onClick={scrollToForm}
         >
-          <span className="font-body text-cream/25 text-[10px] tracking-[0.25em] uppercase">Scroll</span>
+          <span className="font-body text-cream/50 text-[10px] tracking-[0.25em] uppercase">Scroll</span>
           <motion.div
             animate={{ y: [0, 7, 0] }}
             transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
@@ -156,17 +158,17 @@ export default function Home() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                     d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                 </svg>
-                <p className="font-body text-xs text-charcoal/35 leading-relaxed">
+                <p className="font-body text-xs text-charcoal/60 leading-relaxed">
                   Your photo is analyzed instantly and never stored. Privacy by design.
                 </p>
               </div>
             </div>
 
-            {/* Occasion — slides in when photo is ready */}
+            {/* Gender — slides in when photo is ready */}
             <AnimatePresence>
               {uploadedFile && (
                 <motion.div
-                  key="occasion"
+                  key="gender"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 8 }}
@@ -176,6 +178,26 @@ export default function Home() {
                   <p className="font-body font-semibold text-gold tracking-[0.25em] text-xs uppercase mb-2">
                     Step 2
                   </p>
+                  <h2 className="font-heading text-2xl text-charcoal mb-6">Style recommendations for…</h2>
+                  <GenderPicker />
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {/* Occasion — slides in when gender is chosen */}
+            <AnimatePresence>
+              {uploadedFile && gender && (
+                <motion.div
+                  key="occasion"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 8 }}
+                  transition={{ duration: 0.4, ease: 'easeOut' }}
+                  className="mt-8 pt-8 border-t border-charcoal/10"
+                >
+                  <p className="font-body font-semibold text-gold tracking-[0.25em] text-xs uppercase mb-2">
+                    Step 3
+                  </p>
                   <h2 className="font-heading text-2xl text-charcoal mb-6">What's the occasion?</h2>
                   <OccasionPicker />
                 </motion.div>
@@ -184,7 +206,7 @@ export default function Home() {
 
             {/* Consent + CTA — slides in when occasion is chosen */}
             <AnimatePresence>
-              {uploadedFile && selectedOccasion && (
+              {uploadedFile && gender && selectedOccasion && (
                 <motion.div
                   key="submit"
                   initial={{ opacity: 0, y: 16 }}
@@ -216,7 +238,7 @@ export default function Home() {
                         )}
                       </div>
                     </div>
-                    <span className="font-body text-sm text-charcoal/60 leading-relaxed">
+                    <span className="font-body text-sm text-charcoal/75 leading-relaxed">
                       I understand my photo will be analyzed by AI and immediately discarded
                     </span>
                   </label>
@@ -307,7 +329,7 @@ export default function Home() {
                 </div>
                 <div>
                   <h3 className="font-heading text-lg text-cream mb-2">{title}</h3>
-                  <p className="font-body text-sm text-cream/45 leading-relaxed">{desc}</p>
+                  <p className="font-body text-sm text-cream/75 leading-relaxed">{desc}</p>
                 </div>
               </div>
             ))}

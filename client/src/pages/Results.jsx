@@ -56,7 +56,7 @@ export default function Results() {
             className="flex items-center justify-between gap-4
                        bg-gold/8 border border-gold/15 rounded-xl px-4 py-3"
           >
-            <p className="font-body text-xs text-cream/55 leading-relaxed">
+            <p className="font-body text-xs text-cream/80 leading-relaxed">
               Sign in to save your style history
             </p>
             <Link
@@ -102,7 +102,7 @@ export default function Results() {
             <p className="font-body font-semibold text-gold tracking-[0.2em] text-xs uppercase mb-3">
               ARIA's Advice
             </p>
-            <p className="font-body text-cream/65 leading-relaxed">{overallAdvice}</p>
+            <p className="font-body text-cream/85 leading-relaxed">{overallAdvice}</p>
           </motion.div>
         )}
 

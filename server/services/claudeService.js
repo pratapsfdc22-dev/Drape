@@ -4,16 +4,19 @@ import { AI_CONFIG } from '../config/ai.js'
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
 
-const SYSTEM_PROMPT = `You are ARIA, the AI engine inside Drape — an elite personal styling assistant.
-You analyze a person's photo to understand their body type, proportions,
-skin tone, and natural aesthetic. Then you curate 3 complete outfit
-recommendations perfectly suited to them and their occasion.
+const SYSTEM_PROMPT = `You are ARIA, the AI engine inside Get Draped — an elite personal styling assistant.
 
-CRITICAL: Respond ONLY with valid JSON. No markdown. No explanation.
-No preamble. Raw JSON only.
+STEP 1 — HUMAN CHECK (do this first):
+Examine the image. If it does NOT contain a real human person (e.g. it shows an animal, object, cartoon, landscape, text, document, food, building, or anything that is not a real person), respond ONLY with:
+{"isHuman": false, "message": "This doesn't appear to be a photo of a person. Please upload a clear photo of yourself to receive outfit recommendations."}
 
-JSON structure:
+STEP 2 — If it IS a real person, analyze their body type, proportions, skin tone, and natural aesthetic. Then curate 3 complete outfit recommendations suited to them and their occasion.
+
+CRITICAL: Respond ONLY with valid JSON. No markdown. No explanation. No preamble. Raw JSON only.
+
+JSON structure for a real person:
 {
+  "isHuman": true,
   "bodyAnalysis": {
     "bodyType": "e.g. Hourglass / Rectangle / Pear / Apple / Inverted Triangle",
     "skinTone": "e.g. Fair / Light / Medium / Olive / Tan / Deep",
@@ -28,10 +31,10 @@ JSON structure:
       "description": "2 sentences on the look and why it suits this person",
       "pieces": [
         {
-          "item": "Item name e.g. Wide-leg trousers",
+          "item": "Gender-appropriate item name e.g. Wide-leg trousers",
           "brand": "Real brand name e.g. Zara",
           "price": "$XX–$XX",
-          "url": "Real brand category URL"
+          "url": "Brand search URL with item as query"
         }
       ],
       "stylingTip": "One specific actionable styling tip",
@@ -69,8 +72,10 @@ If the photo shows only a face or partial body, make your best inference from wh
 (skin tone, facial features, visible clothing) and still return the full JSON. Do not refuse.
 Note any uncertainty in styleNotes and recommend a full-body photo for better accuracy.`
 
-function buildUserMessage(occasion, customPrompt) {
-  let text = `Analyze this person and recommend outfits for: ${occasion}.`
+function buildUserMessage(occasion, customPrompt, gender) {
+  const genderLabel = gender === 'men' ? 'male' : gender === 'women' ? 'female' : ''
+  const genderPossessive = gender === 'men' ? "men's" : gender === 'women' ? "women's" : ''
+  let text = `Analyze this ${genderLabel ? genderLabel + ' ' : ''}person and recommend ${genderPossessive ? genderPossessive + ' ' : ''}outfits for: ${occasion}. All recommended pieces must be appropriate for ${genderPossessive || 'this person'}.`
   if (customPrompt) text += ` ${customPrompt}`
   return text
 }
@@ -115,7 +120,7 @@ function extractJSON(raw) {
   }
 }
 
-export async function analyzeWithClaude(imageBuffer, imageMediaType, occasion, customPrompt = '') {
+export async function analyzeWithClaude(imageBuffer, imageMediaType, occasion, customPrompt = '', gender = '') {
   // Resize to max 1200px wide at 80% quality — stays in RAM, never touches disk
   let resizedBuffer = await sharp(imageBuffer)
     .resize({ width: 1200, withoutEnlargement: true })
@@ -125,7 +130,7 @@ export async function analyzeWithClaude(imageBuffer, imageMediaType, occasion, c
   let base64Image = resizedBuffer.toString('base64')
   resizedBuffer = null // free resized buffer immediately
 
-  const userText = buildUserMessage(occasion, customPrompt)
+  const userText = buildUserMessage(occasion, customPrompt, gender)
 
   let raw = await callClaude(base64Image, 'image/jpeg', userText)
   let result = extractJSON(raw)
@@ -142,6 +147,12 @@ export async function analyzeWithClaude(imageBuffer, imageMediaType, occasion, c
 
   if (!result) {
     throw new Error('ARIA returned an unreadable response. Please try again.')
+  }
+
+  if (result.isHuman === false) {
+    const err = new Error(result.message || 'Please upload a photo of a person.')
+    err.code = 'NOT_HUMAN'
+    throw err
   }
 
   return result

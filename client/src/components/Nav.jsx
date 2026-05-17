@@ -1,6 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase.js'
 import { useDrape } from '../context/DrapeContext.jsx'
+import Logo from './Logo.jsx'
 
 export default function Nav() {
   const navigate = useNavigate()
@@ -14,25 +15,22 @@ export default function Nav() {
   return (
     <nav
       className="fixed top-0 inset-x-0 z-40 flex items-center justify-between
-                 px-6 h-14 border-b border-cream/5"
-      style={{ background: 'rgba(26,26,26,0.82)', backdropFilter: 'blur(12px)' }}
+                 px-6 h-16 border-b border-cream/8"
+      style={{ background: 'rgba(26,26,26,0.88)', backdropFilter: 'blur(12px)' }}
     >
-      <Link
-        to="/"
-        className="font-heading text-lg text-cream hover:text-gold transition-colors duration-200"
-      >
-        Drape
+      <Link to="/">
+        <Logo textSize="text-lg" taglineSize="text-[8px]" showTagline={true} />
       </Link>
 
       <div className="flex items-center gap-5">
         {user ? (
           <>
-            <span className="hidden sm:block font-body text-xs text-cream/35 max-w-[200px] truncate">
+            <span className="hidden sm:block font-body text-xs text-cream/60 max-w-[200px] truncate">
               {user.email}
             </span>
             <button
               onClick={handleSignOut}
-              className="font-body text-xs text-cream/40 hover:text-cream/70
+              className="font-body text-xs text-cream/65 hover:text-cream
                          transition-colors duration-200 cursor-pointer"
             >
               Sign Out
@@ -41,7 +39,7 @@ export default function Nav() {
         ) : (
           <Link
             to="/auth"
-            className="font-body text-xs text-cream/35 hover:text-cream/60
+            className="font-body text-xs text-cream/65 hover:text-cream
                        transition-colors duration-200"
           >
             Sign In

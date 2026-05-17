@@ -9,6 +9,7 @@ export function useAnalyze() {
   const navigate = useNavigate()
   const {
     uploadedFile,
+    gender,
     selectedOccasion,
     customPrompt,
     isLoading,
@@ -30,6 +31,7 @@ export function useAnalyze() {
       formData.append('photo', uploadedFile)
       formData.append('occasion', selectedOccasion)
       formData.append('customPrompt', customPrompt)
+      if (gender) formData.append('gender', gender)
 
       const headers = {}
       const { data: { session } } = await supabase.auth.getSession()

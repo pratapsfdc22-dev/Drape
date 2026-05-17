@@ -10,7 +10,7 @@ const MAX_FILE_BYTES = 10 * 1024 * 1024
 
 router.post('/', analyzeRateLimiter, uploadMiddleware.single('photo'), async (req, res) => {
   const file = req.file
-  const { occasion, customPrompt = '' } = req.body
+  const { occasion, customPrompt = '', gender = '' } = req.body
 
   if (!file) {
     return res.status(400).json({ message: 'Please upload a photo.' })
@@ -23,7 +23,7 @@ router.post('/', analyzeRateLimiter, uploadMiddleware.single('photo'), async (re
   }
 
   try {
-    const result = await analyzeWithClaude(file.buffer, file.mimetype, occasion, customPrompt)
+    const result = await analyzeWithClaude(file.buffer, file.mimetype, occasion, customPrompt, gender)
 
     // Log session for authenticated users; guests pass through silently.
     const authHeader = req.headers.authorization
@@ -38,12 +38,12 @@ router.post('/', analyzeRateLimiter, uploadMiddleware.single('photo'), async (re
     req.file.buffer = null
     res.json(result)
   } catch (err) {
-    console.error('Analyze error:', err.message, err.stack)
     if (req.file) req.file.buffer = null
-    res.status(500).json({
-      message: 'Something went wrong. Please try again.',
-      debug: err.message,
-    })
+    if (err.code === 'NOT_HUMAN') {
+      return res.status(400).json({ message: err.message })
+    }
+    console.error('Analyze error:', err.message, err.stack)
+    res.status(500).json({ message: 'Something went wrong. Please try again.' })
   }
 })
 

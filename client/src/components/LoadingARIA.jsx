@@ -71,7 +71,7 @@ export default function LoadingARIA() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.6 }}
-        className="mt-4 font-body text-xs text-cream/30 tracking-wide"
+        className="mt-4 font-body text-xs text-cream/60 tracking-wide"
       >
         This takes about 15–20 seconds
       </motion.p>

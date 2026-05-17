@@ -24,7 +24,7 @@ export default function NotFound() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.2 }}
-        className="font-body text-cream/45 mb-10"
+        className="font-body text-cream/75 mb-10"
       >
         Let's style you instead.
       </motion.p>
@@ -38,7 +38,7 @@ export default function NotFound() {
           className="px-10 py-4 rounded-full border border-gold/40 text-gold font-body font-medium
                      hover:bg-gold hover:text-charcoal transition-all duration-300"
         >
-          Back to Drape
+          Back to Get Draped
         </Link>
       </motion.div>
     </main>

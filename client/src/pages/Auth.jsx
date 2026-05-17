@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { supabase } from '../lib/supabase.js'
+import Logo from '../components/Logo.jsx'
 
 export default function Auth() {
   const navigate = useNavigate()
@@ -70,11 +71,8 @@ export default function Auth() {
         className="w-full max-w-sm"
       >
         {/* Wordmark */}
-        <div className="text-center mb-8">
-          <p className="font-heading text-3xl text-cream">Drape</p>
-          <p className="font-body text-[10px] text-cream/35 mt-1 tracking-[0.25em] uppercase">
-            Your AI Personal Stylist
-          </p>
+        <div className="flex justify-center mb-8">
+          <Logo textSize="text-3xl" taglineSize="text-[10px]" showTagline={true} />
         </div>
 
         {/* Card */}
@@ -215,12 +213,12 @@ export default function Auth() {
           </form>
 
           {/* Guest bypass */}
-          <p className="mt-6 text-center font-body text-xs text-charcoal/35">
+          <p className="mt-6 text-center font-body text-xs text-charcoal/60">
             Just browsing?{' '}
             <button
               type="button"
               onClick={() => navigate('/')}
-              className="text-charcoal/50 underline underline-offset-2 hover:text-charcoal
+              className="text-charcoal/70 underline underline-offset-2 hover:text-charcoal
                          transition-colors cursor-pointer"
             >
               Continue as guest

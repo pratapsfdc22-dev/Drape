@@ -23,8 +23,8 @@ export default function ConsentBanner() {
           className="fixed bottom-0 inset-x-0 z-50 bg-charcoal border-t border-cream/8 px-4 py-5 md:px-8"
         >
           <div className="max-w-4xl mx-auto flex flex-col sm:flex-row items-start sm:items-center gap-4">
-            <p className="flex-1 font-body text-sm text-cream/65 leading-relaxed">
-              Drape processes your photos in real-time using AI. No images are stored.{' '}
+            <p className="flex-1 font-body text-sm text-cream/80 leading-relaxed">
+              Get Draped processes your photos in real-time using AI. No images are stored.{' '}
               <Link
                 to="/about"
                 className="text-gold hover:text-gold/75 transition-colors duration-150 underline underline-offset-2"

@@ -7,6 +7,7 @@ import Auth from './pages/Auth.jsx'
 import NotFound from './pages/NotFound.jsx'
 import Nav from './components/Nav.jsx'
 import ConsentBanner from './components/ConsentBanner.jsx'
+import Footer from './components/Footer.jsx'
 
 export default function App() {
   return (
@@ -21,6 +22,7 @@ export default function App() {
           <Route path="/auth" element={<Auth />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
+        <Footer />
       </BrowserRouter>
     </DrapeProvider>
   )

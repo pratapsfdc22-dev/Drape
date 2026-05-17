@@ -6,6 +6,7 @@ const DrapeContext = createContext(null)
 export function DrapeProvider({ children }) {
   const [uploadedFile, setUploadedFile] = useState(null)
   const [previewURL, setPreviewURL] = useState(null)
+  const [gender, setGender] = useState(null)
   const [selectedOccasion, setSelectedOccasion] = useState(null)
   const [customPrompt, setCustomPrompt] = useState('')
   const [analysisResult, setAnalysisResult] = useState(null)
@@ -29,6 +30,7 @@ export function DrapeProvider({ children }) {
     if (previewURL) URL.revokeObjectURL(previewURL)
     setUploadedFile(null)
     setPreviewURL(null)
+    setGender(null)
     setSelectedOccasion(null)
     setCustomPrompt('')
     setAnalysisResult(null)
@@ -41,6 +43,7 @@ export function DrapeProvider({ children }) {
       value={{
         uploadedFile, setUploadedFile,
         previewURL, setPreviewURL,
+        gender, setGender,
         selectedOccasion, setSelectedOccasion,
         customPrompt, setCustomPrompt,
         analysisResult, setAnalysisResult,
