@@ -1,19 +1,13 @@
 import { createClient } from '@supabase/supabase-js'
 
-// Anon client — used for JWT verification (respects RLS)
 function createAnonClient() {
-  return createClient(
-    process.env.SUPABASE_URL,
-    process.env.SUPABASE_ANON_KEY
-  )
+  if (!process.env.SUPABASE_URL || !process.env.SUPABASE_ANON_KEY) return null
+  return createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY)
 }
 
-// Service role client — used for trusted server-side data operations
 function createServiceClient() {
-  return createClient(
-    process.env.SUPABASE_URL,
-    process.env.SUPABASE_SERVICE_ROLE_KEY
-  )
+  if (!process.env.SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) return null
+  return createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY)
 }
 
 export { createAnonClient, createServiceClient }
@@ -22,7 +16,9 @@ export { createAnonClient, createServiceClient }
  * Verify a Supabase JWT and return the user, or null if invalid.
  */
 export async function verifyToken(token) {
-  const { data, error } = await createAnonClient().auth.getUser(token)
+  const client = createAnonClient()
+  if (!client) return null
+  const { data, error } = await client.auth.getUser(token)
   if (error) return null
   return data.user
 }
