@@ -50,7 +50,11 @@ Reformation (thereformation.com), Everlane (everlane.com),
 Banana Republic (bananarepublic.gap.com), J.Crew (jcrew.com),
 Lululemon (lululemon.com), Uniqlo (uniqlo.com), COS (cosstores.com)
 
-Each outfit must have 4–5 pieces (top, bottom or dress, shoes, bag, accessory).`
+Each outfit must have 4–5 pieces (top, bottom or dress, shoes, bag, accessory).
+
+If the photo shows only a face or partial body, make your best inference from what is visible
+(skin tone, facial features, visible clothing) and still return the full JSON. Do not refuse.
+Note any uncertainty in styleNotes and recommend a full-body photo for better accuracy.`
 
 function buildUserMessage(occasion, customPrompt) {
   let text = `Analyze this person and recommend outfits for: ${occasion}.`

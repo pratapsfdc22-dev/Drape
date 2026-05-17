@@ -10,7 +10,7 @@ const HOW_IT_WORKS = [
   {
     step: '01',
     title: 'Upload Your Photo',
-    desc: 'Share a clear photo of yourself. ARIA reads your silhouette, proportions, and natural coloring.',
+    desc: 'Share a full-body photo, head to toe. ARIA reads your silhouette, proportions, and natural coloring.',
     icon: (
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
         d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
@@ -144,7 +144,7 @@ export default function Home() {
               <p className="font-body font-semibold text-gold tracking-[0.25em] text-xs uppercase mb-2">
                 Step 1
               </p>
-              <h2 className="font-heading text-2xl text-charcoal mb-6">Start with a photo</h2>
+              <h2 className="font-heading text-2xl text-charcoal mb-6">Start with a full-body photo</h2>
               <UploadZone />
 
               {/* Privacy notice */}

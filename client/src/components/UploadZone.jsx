@@ -114,7 +114,7 @@ export default function UploadZone() {
               <img
                 src={previewURL}
                 alt="Your uploaded photo preview"
-                className="w-full max-h-72 object-cover"
+                className="w-full max-h-96 object-cover object-top"
               />
 
               <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-charcoal/85 via-charcoal/40 to-transparent px-4 pt-10 pb-4">
@@ -174,9 +174,12 @@ export default function UploadZone() {
                 <p className="font-body font-semibold text-charcoal text-sm">
                   {isDragActive
                     ? 'Drop to add your photo'
-                    : 'Drop your photo here or click to browse'}
+                    : 'Drop a full-body photo or click to browse'}
                 </p>
-                <p className="font-body text-charcoal/40 text-xs mt-1.5">
+                <p className="font-body text-charcoal/45 text-xs mt-1.5 leading-relaxed">
+                  Head to toe · facing the camera · good lighting
+                </p>
+                <p className="font-body text-charcoal/30 text-xs mt-1">
                   JPEG, PNG or WebP · Up to 10 MB
                 </p>
               </div>
