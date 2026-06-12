@@ -10,7 +10,7 @@ const MAX_FILE_BYTES = 10 * 1024 * 1024
 
 router.post('/', analyzeRateLimiter, uploadMiddleware.single('photo'), async (req, res) => {
   const file = req.file
-  const { occasion, customPrompt = '', gender = '' } = req.body
+  const { occasion, customPrompt = '', gender = '', country = '', postalCode = '' } = req.body
 
   if (!file) {
     return res.status(400).json({ message: 'Please upload a photo.' })
@@ -23,7 +23,8 @@ router.post('/', analyzeRateLimiter, uploadMiddleware.single('photo'), async (re
   }
 
   try {
-    const result = await analyzeWithClaude(file.buffer, file.mimetype, occasion, customPrompt, gender)
+    const location = country ? { country, postalCode } : null
+    const result = await analyzeWithClaude(file.buffer, file.mimetype, occasion, customPrompt, gender, location)
 
     // Log session for authenticated users; guests pass through silently.
     const authHeader = req.headers.authorization

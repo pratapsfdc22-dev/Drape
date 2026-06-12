@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import UploadZone from '../components/UploadZone.jsx'
 import GenderPicker from '../components/GenderPicker.jsx'
 import OccasionPicker from '../components/OccasionPicker.jsx'
+import LocationPicker from '../components/LocationPicker.jsx'
 import LoadingARIA from '../components/LoadingARIA.jsx'
 import { useDrape } from '../context/DrapeContext.jsx'
 import { useAnalyze, TIMEOUT_ERROR_MSG } from '../hooks/useAnalyze.js'
@@ -382,6 +383,29 @@ export default function Home() {
                   </p>
                   <h2 className="font-heading text-2xl text-charcoal mb-6">What's the occasion?</h2>
                   <OccasionPicker />
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {/* Location — slides in when occasion is chosen (optional) */}
+            <AnimatePresence>
+              {uploadedFile && gender && selectedOccasion && (
+                <motion.div
+                  key="location"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 8 }}
+                  transition={{ duration: 0.4, ease: 'easeOut' }}
+                  className="mt-8 pt-8 border-t border-charcoal/10"
+                >
+                  <p className="font-body font-semibold text-gold tracking-[0.25em] text-xs uppercase mb-2">
+                    Step 4 · Optional
+                  </p>
+                  <h2 className="font-heading text-2xl text-charcoal mb-2">Where are you located?</h2>
+                  <p className="font-body text-xs text-charcoal/55 mb-6 leading-relaxed">
+                    ARIA will recommend brands and stores available in your market.
+                  </p>
+                  <LocationPicker />
                 </motion.div>
               )}
             </AnimatePresence>

@@ -10,6 +10,7 @@ export function useAnalyze() {
   const {
     uploadedFile,
     gender,
+    location,
     selectedOccasion,
     customPrompt,
     isLoading,
@@ -32,6 +33,8 @@ export function useAnalyze() {
       formData.append('occasion', selectedOccasion)
       formData.append('customPrompt', customPrompt)
       if (gender) formData.append('gender', gender)
+      if (location?.country) formData.append('country', location.country)
+      if (location?.postalCode) formData.append('postalCode', location.postalCode)
 
       const headers = {}
       const { data: { session } } = await supabase.auth.getSession()

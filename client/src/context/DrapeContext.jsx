@@ -7,6 +7,7 @@ export function DrapeProvider({ children }) {
   const [uploadedFile, setUploadedFile] = useState(null)
   const [previewURL, setPreviewURL] = useState(null)
   const [gender, setGender] = useState(null)
+  const [location, setLocation] = useState({ country: '', postalCode: '' })
   const [selectedOccasion, setSelectedOccasion] = useState(null)
   const [customPrompt, setCustomPrompt] = useState('')
   const [analysisResult, setAnalysisResult] = useState(null)
@@ -31,6 +32,7 @@ export function DrapeProvider({ children }) {
     setUploadedFile(null)
     setPreviewURL(null)
     setGender(null)
+    setLocation({ country: '', postalCode: '' })
     setSelectedOccasion(null)
     setCustomPrompt('')
     setAnalysisResult(null)
@@ -44,6 +46,7 @@ export function DrapeProvider({ children }) {
         uploadedFile, setUploadedFile,
         previewURL, setPreviewURL,
         gender, setGender,
+        location, setLocation,
         selectedOccasion, setSelectedOccasion,
         customPrompt, setCustomPrompt,
         analysisResult, setAnalysisResult,

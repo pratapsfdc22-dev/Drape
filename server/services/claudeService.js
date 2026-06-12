@@ -44,27 +44,50 @@ JSON structure for a real person:
   "overallAdvice": "2-3 sentences of occasion-specific style advice"
 }
 
-Use REAL brands from this list. For the "url" field, use the brand's search URL with the item name as the search term (replace spaces with +). Use ONLY these exact URL formats:
+Use REAL brands. For the "url" field, use the brand's search URL (replace spaces with +).
 
+If the user's country is provided, prioritize brands that operate in their market and use the correct regional URL. Guidelines by region:
+- India → prefer Myntra, Ajio, Nykaa Fashion first; supplement with ASOS/Zara/H&M/Uniqlo
+- UK / Europe → prefer Zalando, Marks & Spencer, Next, ASOS first; supplement with Zara/H&M/COS
+- Australia / NZ → prefer The Iconic first; supplement with ASOS/Zara/H&M/Uniqlo
+- US / Canada → use the full US brand list below
+- All other countries → use global brands (ASOS, Zara, H&M, Uniqlo, Mango, COS)
+
+GLOBAL:
 Zara: https://www.zara.com/us/en/search?searchTerm=ITEM
 H&M: https://www2.hm.com/en_us/search-results.html?q=ITEM
 ASOS: https://www.asos.com/search/?q=ITEM
+Uniqlo: https://www.uniqlo.com/us/en/search?q=ITEM
+COS: https://www.cosstores.com/en_usd/search.html?q=ITEM
+Mango: https://shop.mango.com/us/search?q=ITEM
+
+US MARKET:
 Nordstrom: https://www.nordstrom.com/sr?keyword=ITEM
 Net-a-Porter: https://www.net-a-porter.com/en-us/search?q=ITEM
 Revolve: https://www.revolve.com/search/?q=ITEM
 Anthropologie: https://www.anthropologie.com/search?q=ITEM
 Free People: https://www.freepeople.com/search/?q=ITEM
-Mango: https://shop.mango.com/us/search?q=ITEM
-& Other Stories: https://www.stories.com/en_usd/search?q=ITEM
 Reformation: https://www.thereformation.com/search?q=ITEM
 Everlane: https://www.everlane.com/search?query=ITEM
 Banana Republic: https://bananarepublic.gap.com/search?searchPhrase=ITEM
 J.Crew: https://www.jcrew.com/r/search?q=ITEM
 Lululemon: https://shop.lululemon.com/search?Ntt=ITEM
-Uniqlo: https://www.uniqlo.com/us/en/search?q=ITEM
-COS: https://www.cosstores.com/en_usd/search.html?q=ITEM
+& Other Stories: https://www.stories.com/en_usd/search?q=ITEM
 
-Example: for a "Wide-leg trousers" piece from Zara, url = "https://www.zara.com/us/en/search?searchTerm=Wide-leg+trousers"
+UK / EUROPE:
+Marks & Spencer: https://www.marksandspencer.com/search-results?q=ITEM
+Next: https://www.next.co.uk/search?q=ITEM
+Zalando: https://www.zalando.co.uk/search/?q=ITEM
+
+INDIA:
+Myntra: https://www.myntra.com/search-results?q=ITEM
+Ajio: https://www.ajio.com/search/?q=ITEM
+Nykaa Fashion: https://www.nykaafashion.com/search?q=ITEM
+
+AUSTRALIA / NZ:
+The Iconic: https://www.theiconic.com.au/search/?q=ITEM
+
+Example: for "Wide-leg trousers" from Zara, url = "https://www.zara.com/us/en/search?searchTerm=Wide-leg+trousers"
 
 Each outfit must have 4–5 pieces (top, bottom or dress, shoes, bag, accessory).
 
@@ -72,10 +95,16 @@ If the photo shows only a face or partial body, make your best inference from wh
 (skin tone, facial features, visible clothing) and still return the full JSON. Do not refuse.
 Note any uncertainty in styleNotes and recommend a full-body photo for better accuracy.`
 
-function buildUserMessage(occasion, customPrompt, gender) {
+function buildUserMessage(occasion, customPrompt, gender, location) {
   const genderLabel = gender === 'men' ? 'male' : gender === 'women' ? 'female' : ''
   const genderPossessive = gender === 'men' ? "men's" : gender === 'women' ? "women's" : ''
   let text = `Analyze this ${genderLabel ? genderLabel + ' ' : ''}person and recommend ${genderPossessive ? genderPossessive + ' ' : ''}outfits for: ${occasion}. All recommended pieces must be appropriate for ${genderPossessive || 'this person'}.`
+  if (location?.country) {
+    const locationStr = location.postalCode
+      ? `${location.country} (postal code: ${location.postalCode})`
+      : location.country
+    text += ` The user is located in ${locationStr}. Recommend brands and retailers available in their market, and use the correct regional store URLs for that country.`
+  }
   if (customPrompt) text += ` ${customPrompt}`
   return text
 }
@@ -120,7 +149,7 @@ function extractJSON(raw) {
   }
 }
 
-export async function analyzeWithClaude(imageBuffer, imageMediaType, occasion, customPrompt = '', gender = '') {
+export async function analyzeWithClaude(imageBuffer, imageMediaType, occasion, customPrompt = '', gender = '', location = null) {
   // Resize to max 1200px wide at 80% quality — stays in RAM, never touches disk
   let resizedBuffer = await sharp(imageBuffer)
     .resize({ width: 1200, withoutEnlargement: true })
@@ -130,7 +159,7 @@ export async function analyzeWithClaude(imageBuffer, imageMediaType, occasion, c
   let base64Image = resizedBuffer.toString('base64')
   resizedBuffer = null // free resized buffer immediately
 
-  const userText = buildUserMessage(occasion, customPrompt, gender)
+  const userText = buildUserMessage(occasion, customPrompt, gender, location)
 
   let raw = await callClaude(base64Image, 'image/jpeg', userText)
   let result = extractJSON(raw)
