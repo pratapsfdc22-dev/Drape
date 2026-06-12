@@ -9,6 +9,10 @@ import { globalRateLimiter } from './middleware/rateLimiter.js'
 const app = express()
 const PORT = process.env.PORT || 3001
 
+// Railway (and most PaaS) sit behind a load balancer — trust the first proxy
+// so express-rate-limit reads the real client IP from X-Forwarded-For
+app.set('trust proxy', 1)
+
 app.use(helmet({
   crossOriginResourcePolicy: { policy: 'cross-origin' },
 }))
