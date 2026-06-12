@@ -13,11 +13,32 @@ const PORT = process.env.PORT || 3001
 // so express-rate-limit reads the real client IP from X-Forwarded-For
 app.set('trust proxy', 1)
 
+const ALLOWED_ORIGINS = [
+  'https://get-drape.com',
+  'https://www.get-drape.com',
+  'http://localhost:5173',
+]
+
+const corsOptions = {
+  origin: (origin, callback) => {
+    // Allow requests with no origin (curl, Postman, server-to-server)
+    if (!origin || ALLOWED_ORIGINS.includes(origin)) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  },
+  credentials: true,
+}
+
+// CORS must be the very first middleware — before helmet and the rate limiter —
+// so that even 429 and 5xx responses carry the Access-Control-Allow-Origin header.
+app.options('*', cors(corsOptions))
+app.use(cors(corsOptions))
+
 app.use(helmet({
   crossOriginResourcePolicy: { policy: 'cross-origin' },
 }))
-app.options('*', cors())
-app.use(cors())
 app.use(express.json({ limit: '50mb' }))
 app.use(globalRateLimiter)
 
