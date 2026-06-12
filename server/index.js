@@ -1,6 +1,5 @@
 import 'dotenv/config'
 import express from 'express'
-import cors from 'cors'
 import helmet from 'helmet'
 import analyzeRouter from './routes/analyze.js'
 import authRouter from './routes/auth.js'
@@ -19,22 +18,20 @@ const ALLOWED_ORIGINS = [
   'http://localhost:5173',
 ]
 
-const corsOptions = {
-  origin: (origin, callback) => {
-    // Allow requests with no origin (curl, Postman, server-to-server)
-    if (!origin || ALLOWED_ORIGINS.includes(origin)) {
-      callback(null, true)
-    } else {
-      callback(new Error('Not allowed by CORS'))
-    }
-  },
-  credentials: true,
-}
-
-// CORS must be the very first middleware — before helmet and the rate limiter —
-// so that even 429 and 5xx responses carry the Access-Control-Allow-Origin header.
-app.options('*', cors(corsOptions))
-app.use(cors(corsOptions))
+// Raw CORS handler — runs before helmet, rate limiter, and everything else.
+// Sets the header on every response (including 429s) and short-circuits OPTIONS
+// preflight immediately so the rate limiter never sees it.
+app.use((req, res, next) => {
+  const origin = req.headers.origin
+  if (!origin || ALLOWED_ORIGINS.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin || '*')
+  }
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+  res.setHeader('Access-Control-Allow-Credentials', 'true')
+  if (req.method === 'OPTIONS') return res.sendStatus(204)
+  next()
+})
 
 app.use(helmet({
   crossOriginResourcePolicy: { policy: 'cross-origin' },
