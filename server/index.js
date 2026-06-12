@@ -24,15 +24,6 @@ app.get('/health', (_req, res) => {
   res.json({ status: 'ok', app: 'Drape API' })
 })
 
-app.get('/debug/env', (_req, res) => {
-  res.json({
-    hasAnthropicKey: !!process.env.ANTHROPIC_API_KEY,
-    hasSupabaseUrl: !!process.env.SUPABASE_URL,
-    hasSupabaseKey: !!process.env.SUPABASE_ANON_KEY,
-    claudeModel: process.env.CLAUDE_MODEL ?? '(not set)',
-    nodeEnv: process.env.NODE_ENV ?? '(not set)',
-  })
-})
 
 app.get('/api/health', (_req, res) => {
   res.json({ status: 'ok', service: 'Drape API', timestamp: new Date().toISOString() })
