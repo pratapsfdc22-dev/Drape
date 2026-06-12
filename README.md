@@ -1,14 +1,79 @@
-# Drape — Your AI Personal Stylist
+# Get Draped — AI Personal Styling Platform
 
-ARIA (AI Recommendation & Image Analyst) analyzes your photo and curates 3 complete outfit recommendations tailored to your body type, skin tone, and occasion — with real brands, real prices, and direct shopping links.
+**ARIA** (Aesthetic Realtime Intelligence Advisor) analyzes a user's photo and curates 3 complete outfit recommendations tailored to their body type, skin tone, occasion, and location — with real brands, real prices, and direct shopping links.
 
-**Live:** [get-drape.com](https://get-drape.com)
+**Live:** [get-drape.com](https://get-drape.com) · Powered by [WestSideAI](https://www.westsideai.org)
+
+---
+
+## The Business Case
+
+### The Problem
+
+Fashion retail faces three compounding challenges:
+
+- **Returns cost the industry $816 billion globally per year** — the leading cause is items that don't suit the buyer's body type or personal style
+- **Conversion rates on fashion e-commerce average just 1–3%** — most shoppers browse without buying because they can't visualize how something will look on them specifically
+- **Personalization at scale is expensive** — hiring human stylists or personal shoppers is reserved for luxury clients, leaving the mass market underserved
+
+### What Get Draped Does
+
+Get Draped puts an AI personal stylist in front of every shopper, regardless of budget or brand tier. In under 60 seconds, ARIA delivers:
+
+- A body type and skin tone analysis
+- 3 curated full outfits (top, bottom, shoes, bag, accessory)
+- Brand recommendations matched to the user's location and market
+- Direct shopping links to real products
+
+This is the experience that previously required a £200/hour personal stylist — now available at scale.
+
+---
+
+## Business Use Cases
+
+### For Fashion Retailers & E-commerce Brands
+
+| Use Case | Impact |
+|---|---|
+| **Pre-purchase styling assistant** | Embed on product pages to show shoppers how items work in a full outfit — drives cross-sell and increases basket size |
+| **Returns reduction** | Shoppers who receive personalized fit/style guidance return fewer items — directly improving margin |
+| **Brand discovery** | ARIA introduces shoppers to complementary brands they wouldn't have searched for independently — increases affiliate and referral revenue |
+| **Conversion lift** | Personalized recommendations convert at 3–5× the rate of generic product listings |
+
+### For Fashion Brands
+
+| Use Case | Impact |
+|---|---|
+| **Own-brand integration** | White-label ARIA to surface your product catalog exclusively — every recommendation drives the user back to your store |
+| **Occasion marketing** | Wedding season, festival drops, back-to-school — occasion-based recommendations tie into campaign moments with precision |
+| **Regional market penetration** | Location-aware recommendations route users to country-specific storefronts and stock — critical for international expansion |
+| **Customer data (privacy-safe)** | Aggregate session data (body types, occasions, preferred styles by region) provides anonymized market intelligence — no PII, no image storage |
+
+### For Multi-brand Marketplaces & Platforms
+
+| Use Case | Impact |
+|---|---|
+| **Stylist-as-a-feature** | Add AI styling as a premium tier offering to differentiate from pure-search competitors |
+| **Loyalty and retention** | Personalized styling creates habitual return visits — the platform becomes a destination, not just a search engine |
+| **Influencer and social commerce** | Style recommendations are shareable moments — built-in virality drives top-of-funnel acquisition at near-zero CAC |
+
+---
+
+## Key Differentiators
+
+**Privacy-first by design.** Photos are never stored — processed in server RAM and discarded the moment analysis completes. This is a genuine competitive advantage when selling to enterprise retail clients with data governance obligations.
+
+**Market-aware recommendations.** ARIA knows where the user is and routes them to brands and storefronts available in their market — India gets Myntra and Ajio, UK gets Zalando and M&S, US gets Nordstrom and Revolve.
+
+**Occasion intelligence.** Recommendations aren't just about the garment — they're contextual. A job interview outfit looks different from a beach holiday or a wedding guest look.
+
+**State-of-the-art vision AI.** Powered by Anthropic Claude's vision capabilities — the same model family used by leading enterprise AI deployments.
 
 ---
 
 ## Project Overview
 
-Drape is a privacy-first AI styling app. Users upload a photo, choose an occasion, and receive a full style profile from ARIA — powered by Claude's vision capabilities. No image is ever stored: photos are processed in server RAM and discarded the moment analysis completes.
+Get Draped is a privacy-first AI styling platform. Users upload a photo, select their gender and occasion, optionally share their location, and receive a full style profile from ARIA. No image is ever stored: photos are processed in server RAM and discarded the moment analysis completes.
 
 ---
 
@@ -187,3 +252,9 @@ create table style_sessions (
 ```
 
 Only authenticated users generate session rows. Guest analyses produce no database writes. No image data or personally identifiable information beyond the authenticated user ID is stored.
+
+---
+
+## Built by WestSideAI
+
+[WestSideAI](https://www.westsideai.org) builds AI-powered products at the intersection of technology and consumer experience.
