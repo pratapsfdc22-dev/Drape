@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useDrape } from '../context/DrapeContext.jsx'
@@ -14,6 +14,7 @@ export default function UploadZone() {
   const [fileName, setFileName] = useState('')
   const [fileSize, setFileSize] = useState('')
   const [uploadError, setUploadError] = useState(null)
+  const cameraInputRef = useRef(null)
 
   // Clear local display state when context is reset externally (e.g. resetAll())
   useEffect(() => {
@@ -66,6 +67,23 @@ export default function UploadZone() {
     // fileName/fileSize cleared by [uploadedFile] effect
   }
 
+  function handleCameraCapture(e) {
+    const file = e.target.files?.[0]
+    if (!file) return
+    // reset so the same file can be re-selected after a reset
+    e.target.value = ''
+
+    const { valid, error } = validateImage(file)
+    if (!valid) { setUploadError(error); return }
+
+    if (previewURL) revokePreviewUrl(previewURL)
+    setPreviewURL(createPreviewUrl(file))
+    setUploadedFile(file)
+    setFileName(file.name)
+    setFileSize(formatFileSize(file.size))
+    setUploadError(null)
+  }
+
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     accept: { 'image/jpeg': [], 'image/png': [], 'image/webp': [] },
@@ -79,6 +97,17 @@ export default function UploadZone() {
 
   return (
     <div className="w-full">
+      {/* Hidden camera input — triggers native camera on mobile */}
+      <input
+        ref={cameraInputRef}
+        type="file"
+        accept="image/*"
+        capture="user"
+        className="hidden"
+        aria-hidden="true"
+        onChange={handleCameraCapture}
+      />
+
       <div
         {...getRootProps()}
         aria-label={
@@ -183,6 +212,23 @@ export default function UploadZone() {
                   JPEG, PNG or WebP · Up to 10 MB
                 </p>
               </div>
+
+              <button
+                type="button"
+                onClick={(e) => { e.stopPropagation(); cameraInputRef.current?.click() }}
+                aria-label="Take a photo with your camera"
+                className="flex items-center gap-2 px-4 py-2 rounded-full border border-charcoal/20
+                           font-body text-xs font-medium text-charcoal/70
+                           hover:border-gold/50 hover:text-charcoal transition-colors duration-150 cursor-pointer"
+              >
+                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
+                    d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
+                    d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM18.75 10.5h.008v.008h-.008V10.5z" />
+                </svg>
+                Take a Photo
+              </button>
             </motion.div>
           )}
         </AnimatePresence>
