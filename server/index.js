@@ -1,5 +1,6 @@
 import 'dotenv/config'
 import express from 'express'
+import cors from 'cors'
 import helmet from 'helmet'
 import analyzeRouter from './routes/analyze.js'
 import authRouter from './routes/auth.js'
@@ -8,30 +9,15 @@ import { globalRateLimiter } from './middleware/rateLimiter.js'
 const app = express()
 const PORT = process.env.PORT || 3001
 
-// Railway (and most PaaS) sit behind a load balancer — trust the first proxy
-// so express-rate-limit reads the real client IP from X-Forwarded-For
+// Trust Railway's load balancer so the rate limiter uses the real client IP
+// from X-Forwarded-For instead of Railway's internal proxy IP.
 app.set('trust proxy', 1)
 
-const ALLOWED_ORIGINS = [
-  'https://get-drape.com',
-  'https://www.get-drape.com',
-  'http://localhost:5173',
-]
-
-// Raw CORS handler — runs before helmet, rate limiter, and everything else.
-// Sets the header on every response (including 429s) and short-circuits OPTIONS
-// preflight immediately so the rate limiter never sees it.
-app.use((req, res, next) => {
-  const origin = req.headers.origin
-  if (!origin || ALLOWED_ORIGINS.includes(origin)) {
-    res.setHeader('Access-Control-Allow-Origin', origin || '*')
-  }
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization')
-  res.setHeader('Access-Control-Allow-Credentials', 'true')
-  if (req.method === 'OPTIONS') return res.sendStatus(204)
-  next()
-})
+// CORS before helmet and rate limiter so every response (including 429s)
+// carries Access-Control-Allow-Origin.  app.options short-circuits OPTIONS
+// preflight before it ever reaches the rate limiter.
+app.options('*', cors())
+app.use(cors())
 
 app.use(helmet({
   crossOriginResourcePolicy: { policy: 'cross-origin' },
@@ -39,8 +25,8 @@ app.use(helmet({
 app.use(express.json({ limit: '50mb' }))
 
 // Health checks before the rate limiter — Railway's hikari pings /health
-// frequently; if those consumed rate-limit tokens the service would appear
-// unhealthy and hikari would block all traffic with its own 429.
+// every ~30 s; counting those against the rate limit exhausted the bucket
+// and caused hikari to mark the service unhealthy, blocking all traffic.
 app.get('/health', (_req, res) => {
   res.json({ status: 'ok', app: 'Drape API' })
 })
@@ -56,7 +42,6 @@ app.use('/api/auth', authRouter)
 
 app.use((err, req, res, _next) => {
   console.error(err.stack)
-  // Clear any image buffer from memory immediately
   if (req.file) req.file.buffer = null
   res.status(500).json({ error: 'Something went wrong' })
 })
