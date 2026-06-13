@@ -37,19 +37,22 @@ app.use(helmet({
   crossOriginResourcePolicy: { policy: 'cross-origin' },
 }))
 app.use(express.json({ limit: '50mb' }))
-app.use(globalRateLimiter)
 
-app.use('/api/analyze', analyzeRouter)
-app.use('/api/auth', authRouter)
-
+// Health checks before the rate limiter — Railway's hikari pings /health
+// frequently; if those consumed rate-limit tokens the service would appear
+// unhealthy and hikari would block all traffic with its own 429.
 app.get('/health', (_req, res) => {
   res.json({ status: 'ok', app: 'Drape API' })
 })
 
-
 app.get('/api/health', (_req, res) => {
   res.json({ status: 'ok', service: 'Drape API', timestamp: new Date().toISOString() })
 })
+
+app.use(globalRateLimiter)
+
+app.use('/api/analyze', analyzeRouter)
+app.use('/api/auth', authRouter)
 
 app.use((err, req, res, _next) => {
   console.error(err.stack)
