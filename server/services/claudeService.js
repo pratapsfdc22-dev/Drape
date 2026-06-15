@@ -69,7 +69,7 @@ If the user requests gender-neutral / non-binary styling, draw freely from both 
 Use REAL brands. For the "url" field, use the brand's search URL. URL-encode the item name in the query (spaces as +, strip or encode special characters like & and apostrophes).
 
 If the user's country is provided, prioritize brands that operate in their market and use the correct regional URL. Guidelines by region:
-- India → prefer Myntra, Ajio, Nykaa Fashion first; supplement with ASOS/Zara/H&M/Uniqlo
+- India → prefer Myntra, Ajio, Amazon India first; supplement with ASOS/Zara/H&M/Uniqlo
 - UK / Europe → prefer Zalando, Marks & Spencer, Next, ASOS first; supplement with Zara/H&M/COS
 - Australia / NZ → prefer The Iconic first; supplement with ASOS/Zara/H&M/Uniqlo
 - US / Canada → use the full US brand list below
@@ -102,9 +102,9 @@ Next: https://www.next.co.uk/search?q=ITEM
 Zalando: https://www.zalando.co.uk/search/?q=ITEM
 
 INDIA:
-Myntra: https://www.myntra.com/search-results?q=ITEM
-Ajio: https://www.ajio.com/search/?q=ITEM
-Nykaa Fashion: https://www.nykaafashion.com/search?q=ITEM
+Myntra: https://www.myntra.com/search-results?q=ITEM (use short 1-3 word search terms, e.g. "linen kurta" not "dark forest green linen kurta men")
+Ajio: https://www.ajio.com/search/?q=ITEM (use short 1-3 word search terms)
+Amazon India: https://www.amazon.in/s?k=ITEM
 
 AUSTRALIA / NZ:
 The Iconic: https://www.theiconic.com.au/search/?q=ITEM
