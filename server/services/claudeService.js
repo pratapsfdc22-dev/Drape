@@ -142,7 +142,7 @@ function buildUserMessage(occasion, customPrompt, gender, location) {
 
 async function callClaude(base64Image, userText, strict = false) {
   const systemText = strict
-    ? `${SYSTEM_PROMPT}\n\nYou previously returned invalid JSON. Return ONLY a raw JSON object. No markdown fences, no explanation, nothing else.`
+    ? `${SYSTEM_PROMPT}\n\nYou previously returned invalid JSON. Return ONLY a raw JSON object. No markdown fences, no explanation, nothing else. Start your response directly with { and end with }.`
     : SYSTEM_PROMPT
 
   const message = await client.messages.create({
@@ -172,9 +172,6 @@ async function callClaude(base64Image, userText, strict = false) {
           { type: 'text', text: userText },
         ],
       },
-      // Prefill: forces the response to start as raw JSON — no markdown
-      // fences, no preamble. We prepend the '{' back below.
-      { role: 'assistant', content: '{' },
     ],
   })
 
@@ -189,7 +186,7 @@ async function callClaude(base64Image, userText, strict = false) {
     throw new Error('ARIA returned no text content.')
   }
 
-  return '{' + textBlock.text.trim()
+  return textBlock.text.trim()
 }
 
 function extractJSON(raw) {
