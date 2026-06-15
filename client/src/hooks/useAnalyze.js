@@ -54,6 +54,8 @@ export function useAnalyze() {
       console.error('Analysis error:', err)
       if (err.code === 'ECONNABORTED') {
         setError(TIMEOUT_ERROR_MSG)
+      } else if (err.code === 'ERR_NETWORK' || !err.response) {
+        setError('Network connection lost. Please check your internet and try again.')
       } else {
         setError(err.response?.data?.message ?? 'Analysis failed. Please try again.')
       }
