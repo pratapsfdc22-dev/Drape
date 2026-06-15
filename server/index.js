@@ -5,6 +5,7 @@ import helmet from 'helmet'
 import analyzeRouter from './routes/analyze.js'
 import authRouter from './routes/auth.js'
 import { globalRateLimiter } from './middleware/rateLimiter.js'
+import { pingClaude } from './services/claudeService.js'
 
 const app = express()
 const PORT = process.env.PORT || 3001
@@ -33,6 +34,15 @@ app.get('/health', (_req, res) => {
 
 app.get('/api/health', (_req, res) => {
   res.json({ status: 'ok', service: 'Drape API', timestamp: new Date().toISOString() })
+})
+
+app.get('/api/ai-ping', async (_req, res) => {
+  try {
+    const model = await pingClaude()
+    res.json({ status: 'ok', model })
+  } catch (err) {
+    res.status(500).json({ status: 'error', message: err.message })
+  }
 })
 
 app.use(globalRateLimiter)

@@ -204,6 +204,15 @@ function extractJSON(raw) {
  * Note: imageMediaType is accepted for backwards compatibility with the
  * existing route call, but is unused — sharp re-encodes everything to JPEG.
  */
+export async function pingClaude() {
+  const message = await client.messages.create({
+    model: AI_CONFIG.model,
+    max_tokens: 10,
+    messages: [{ role: 'user', content: 'Reply with the single word: ok' }],
+  })
+  return AI_CONFIG.model
+}
+
 export async function analyzeWithClaude(imageBuffer, imageMediaType, occasion, customPrompt = '', gender = '', location = null) {
   // Resize to max 1200px wide at 80% quality — stays in RAM, never touches disk
   let resizedBuffer = await sharp(imageBuffer)

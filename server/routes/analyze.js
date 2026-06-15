@@ -43,6 +43,14 @@ router.post('/', analyzeRateLimiter, uploadMiddleware.single('photo'), async (re
     if (err.code === 'NOT_HUMAN') {
       return res.status(400).json({ message: err.message })
     }
+    if (err.status === 401) {
+      console.error('Analyze error: Anthropic auth failure — check ANTHROPIC_API_KEY')
+      return res.status(500).json({ message: 'AI service configuration error. Contact support.' })
+    }
+    if (err.status === 400) {
+      console.error('Analyze error: Anthropic bad request — model config issue:', err.message)
+      return res.status(500).json({ message: 'AI model configuration error. Contact support.' })
+    }
     console.error('Analyze error:', err.message, err.stack)
     res.status(500).json({ message: 'Something went wrong. Please try again.' })
   }
